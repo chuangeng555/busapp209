@@ -125,7 +125,7 @@ def current_timing(code): # to display bus timing [Chosen Bus stop] to the user
     # print(finalOutput)
     return (finalOutput)
 
-# current_timing({'54089': 'OPP ANG MO KIO SWIM CPLX', '54321': 'Blk 354', '54329': 'Blk 420', '54081': 'TECK GHEE CT', '54331': 'Blk 346'})
+
 
 
 def get_BusStopNumber():
@@ -210,10 +210,9 @@ def calculation(lat, lon): #calculate busstop that is near user's location , arr
             final_dict = dict(sorted_items[:5])
     for k,v in final_dict.items():
         busDes[k] = v['Description'] 
-    # print(current_timing(busDes))
+
     return (current_timing(busDes))
 
-# calculation(1.364952 , 103.849861)
 
 
 def numlist(num): #for function - GSR
