@@ -11,9 +11,11 @@ import datetime as dt
 import dateutil.parser
 from time import strptime
 from flask import Flask
-from app import app
+from config import Config
 #########################
 
+app = Flask(__name__)
+app.config.from_object(Config)
 
 
 #API urls
