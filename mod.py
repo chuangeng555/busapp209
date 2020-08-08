@@ -11,10 +11,10 @@ import datetime as dt
 import dateutil.parser
 from time import strptime
 from flask import Flask
-from config import Config
-from app import app 
+from config import Config  
 #########################
 
+app = Flask(__name__)
 app.config.from_object(Config)
 
 
@@ -226,3 +226,4 @@ def numlist(num): #for function - GSR
     return (temp)
 
 # numlist(['1','2','3','4','5','6'])
+

@@ -7,7 +7,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 
 from config import Config
 
-from mod import (current_timing, distance, calculation, bus_stops, BusStopMsg, numlist, get_BusStopNumber, testStatus)
+from mod import (calculation, testStatus)
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
