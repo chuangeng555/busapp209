@@ -11,6 +11,7 @@ import datetime as dt
 import dateutil.parser
 from time import strptime
 from flask import Flask
+from app import app
 #########################
 
 
