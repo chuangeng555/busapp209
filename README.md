@@ -1,5 +1,10 @@
 # busapp209
 Bus app for Singaporeans
+
+Usage of the application to check the bus timings of the top 5 bus stop within 400m to the users 
+
+Hosted on heroku free tier, created using python telegram bot library 
+
 You can try the bot at telegram : @bus_209_bot , try it only in mobile env 
 
 This repo contains: 
@@ -9,6 +14,3 @@ This repo contains:
 3. mod.py -- API request to aid App.py
 4. Procfile -- Instruction for Heroku to run my App.py 
 5. requirements.txt - libraires / modules / packages to download  
-
-
-This is my first ever self-project, doing this for fun!
