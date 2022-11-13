@@ -27,10 +27,10 @@ BusCode = {} #mapping of ID number to postal code
 prevLocation = {'location' : 'placeholder'}
 #####################
 
-
 @app.route('/test/')			# binds URL to view function
 def hello():
-	return 'Hello, World!'
+    logger.info("service alive")
+    return 'Hello, World!'
 
 def start(update, context):
     if testStatus() == 200:
@@ -42,11 +42,10 @@ def start(update, context):
     *Press --> /busstop* \n
     To cancel process anytime: \n
     *Press --> /cancel* \n
-    To refresh Timing: \n
-    *Press -->* /refreshTiming \n
 You can type / anytime to kickstart the above mention process
     ''', parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
     else:
+        error(update, context)
         update.message.reply_text(
         ''' There is no information available today, \n
             ''', parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
@@ -66,6 +65,7 @@ def busstop(update, context):
 
         return LOCATION
     else:
+        error(update, context)
         update.message.reply_text(
         ''' There is no information available today
             ''', parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
@@ -99,9 +99,13 @@ def refreshTiming(update, context):
         location = prevLocation['location'].split(",")
         update.message.reply_text('{}'.format(calculation(float(location[0]),float(location[1]))), parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
     except:
+        error(update, context)
         update.message.reply_text(
         ''' You have not send your location, \n
             ''', parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
+    update.message.reply_text('Key in /refreshTiming to refresh Time', parse_mode="Markdown")
+    update.message.reply_text('Key in /busstop to update location', parse_mode="Markdown")
+
     return REFRESH
 
 def error(update, context):
@@ -118,21 +122,28 @@ def cancel(update, context):
 
 
 def main():
+    TOKEN = app.config['BOT_TOKEN']
+    updater = Updater(TOKEN, use_context=True)
+    
 
     #####################################################################################
-    TOKEN = app.config['BOT_TOKEN']
-    PORT = int(os.environ.get('PORT', '8443'))
-    updater = Updater(TOKEN, use_context=True)
-    updater.start_webhook(listen="0.0.0.0",
-                        port=PORT,
-                        url_path=TOKEN)
+    if (app.config['MODE'] != "polling"): 
+        TOKEN = app.config['BOT_TOKEN']
+        PORT = int(os.environ.get('PORT', '8443'))
+            
+        updater.start_webhook(listen="0.0.0.0",
+                            port=PORT,
+                            url_path=TOKEN)
 
-    updater.bot.set_webhook(app.config['APP_URL'] + TOKEN)
+        updater.bot.set_webhook(app.config['APP_URL'] + TOKEN)
     #########################################################################################
+    else: 
+        # Start the Bot in polling mode 
+        print('start bot in polling mode')
+
+        updater.start_polling()
+
     dp = updater.dispatcher
-    ##########################################################################################
-
-
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('busstop', busstop)],
 
@@ -146,19 +157,11 @@ def main():
     )
 
     dp.add_handler(conv_handler)
-
     dp.add_handler(CommandHandler('start', start))
-
     dp.add_error_handler(error)
-    # Start the Bot
-    updater.start_polling()
-
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT
-    updater.idle()
-
+    # updater.idle()
 
 if __name__ == '__main__':
     main()
-
-
