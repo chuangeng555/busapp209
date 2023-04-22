@@ -17,6 +17,10 @@ This repo contains:
 
 ## Docker + minicube : 
 
+env to minicube, user must be in the same env when docker is building ! 
+
+`minikube docker-env`
+
 `eval $(minikube -p minikube docker-env)`
 
 `docker image build . -t "test"`
@@ -24,10 +28,6 @@ This repo contains:
 `docker container run -t test:latest`
 
 ## kube : 
-
-env to minicube, user must be in the same env when docker is building ! 
-
-`minikube docker-env`
 
 Apply manifest file configuration 
 
@@ -40,6 +40,19 @@ Get all deployments in development namespace
 Get all pods in development namespace
 
 `kubectl get pods -n development`   
+
+
+kubectl describe pod <pod-name> -n development
+
+kubectl delete pod <pod-name> -n development
+
+kubectl describe ingress -n development
+
+kubectl get pods -o wide
+
+liveness-exec 
+
+kubectl describe pod liveness-exec
 
 Get all pods logs 
 

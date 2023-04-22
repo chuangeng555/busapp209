@@ -33,6 +33,7 @@ def hello():
     return 'Hello, World!'
 
 def start(update, context):
+    logger.info("service start")
     if testStatus() == 200:
         update.message.reply_text(
 '''`Welcome to Bus Bot 🚌,` \n
@@ -136,9 +137,10 @@ def main():
                             url_path=TOKEN)
 
         updater.bot.set_webhook(app.config['APP_URL'] + TOKEN)
+
+        print('start bot in webhook mode')
     #########################################################################################
     else: 
-        # Start the Bot in polling mode 
         print('start bot in polling mode')
 
         updater.start_polling()
