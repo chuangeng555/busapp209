@@ -1,8 +1,0 @@
-.git
-.env
-__pycache__
-venv
-envDev
-envProd
-test_secret
-test_secret_dev

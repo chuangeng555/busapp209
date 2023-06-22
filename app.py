@@ -27,10 +27,10 @@ BusCode = {} #mapping of ID number to postal code
 prevLocation = {'location' : 'placeholder'}
 #####################
 
-@app.route('/test/')			# binds URL to view function
+@app.route('/keepalive/')			# binds URL to view function
 def hello():
-    logger.info("service alive")
-    return 'Hello, World!'
+    logger.info("stay alive")
+    return 'alive'
 
 def start(update, context):
     logger.info("service start")
@@ -167,3 +167,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    app.run(debug=False)
