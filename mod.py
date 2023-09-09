@@ -33,14 +33,12 @@ final_data = []
 
 
 def testStatus(): #test LTA datamall api connection
-
-    payload = {'BusStopCode': 54229} #testing
+    payload = {'BusStopCode': 83139} #testing
     r = requests.get(bus_url, params=payload, headers= some_headers)
+    print(r.url)
+    print("status_code " + str(r.status_code))
 
-    status_Code = r.status_code
-
-    print(status_Code)
-    return status_Code
+    return r.status_code
 
 testStatus()
 

@@ -27,4 +27,5 @@ tabulate==0.8.7
 tomli==2.0.1
 tornado==6.0.4
 typing_extensions==4.4.0
+urllib3==1.25.11
 Werkzeug==1.0.0
