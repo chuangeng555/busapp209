@@ -1,3 +1,4 @@
+from logging.handlers import RotatingFileHandler
 import os
 import logging
 from flask import Response, Flask, request
@@ -9,9 +10,10 @@ from config import Config
 
 from mod import (calculation, testStatus)
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+log_file_name="info.log"
+handler = RotatingFileHandler(log_file_name, maxBytes=2000, backupCount=3)
+logging.basicConfig(handlers=[handler],  format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -61,6 +63,8 @@ def busstop(update, context):
         # contact_keyboard = KeyboardButton(text="No", request_location=False)
         custom_keyboard = [[location_keyboard]]
 
+        logger.info("request input")
+
         update.message.reply_text("Would you mind sharing your location? \nIf not, you can press --> /cancel",
         reply_markup = ReplyKeyboardMarkup(custom_keyboard, resize_keyboard=True, one_time_keyboard = True))
 
@@ -75,6 +79,7 @@ def busstop(update, context):
 
 #accept location and print bus stop [ bus + bus timing ]
 def location(update, context):
+    logger.info("get location and print bus stop")
 
     global busStopID
     busStopDes = []
@@ -96,10 +101,12 @@ def location(update, context):
 
 # Refresh timng of the same location
 def refreshTiming(update, context):
+    logger.info("refresh timing ")
     try:
         location = prevLocation['location'].split(",")
         update.message.reply_text('{}'.format(calculation(float(location[0]),float(location[1]))), parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
     except:
+        logger.info("refresh timing error")
         error(update, context)
         update.message.reply_text(
         ''' You have not send your location, \n

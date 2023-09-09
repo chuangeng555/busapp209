@@ -5,3 +5,4 @@ envDev
 envProd
 test_secret
 test_secret_dev
+info.log
